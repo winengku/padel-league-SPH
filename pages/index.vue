@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from "vue";
-import { supabase } from "~/lib/supabaseClient";
+const supabase = useSupabase();
 
 /**
  * TYPE

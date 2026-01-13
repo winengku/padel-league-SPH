@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { supabase } from "~/lib/supabaseClient";
+const supabase = useSupabase();
 
 const route = useRoute();
 const roundId = Number(route.params.id);

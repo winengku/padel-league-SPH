@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { supabase } from "~/lib/supabaseClient";
+const supabase = useSupabase();
 import MatchBlock from "~/components/MatchBlock.vue";
 
 const route = useRoute();
