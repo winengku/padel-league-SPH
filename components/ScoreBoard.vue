@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div
-    class="bg-gradient-to-br from-green-800 to-green-900 text-white rounded-2xl p-5 flex items-center justify-between gap-4 shadow-md"
+    class="bg-gradient-to-br from-green-800 to-green-900 text-white rounded-2xl p-5 flex items-center justify-between shadow-md"
   >
     <!-- TEAM A -->
     <div class="flex flex-col items-center gap-1 w-28 text-center">
