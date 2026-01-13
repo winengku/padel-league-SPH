@@ -2,4 +2,10 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss"],
   css: ["~/assets/css/main.css"],
   pages: true,
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+    },
+  },
 });
