@@ -24,7 +24,7 @@ defineProps<{
     </div>
 
     <!-- SCORE -->
-    <div class="text-3xl font-extrabold tracking-wide">
+    <div class="text-2xl font-extrabold tracking-wide">
       {{ scoreA }}
       <span class="mx-2 text-orange-400">:</span>
       {{ scoreB }}
