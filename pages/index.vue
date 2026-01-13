@@ -195,7 +195,7 @@ const ladderByGroup = computed(() => {
 
     <!-- ROUND CARD -->
     <section class="px-4">
-      <div class="flex gap-4 overflow-x-auto">
+      <div class="flex gap-4 overflow-x-auto hide-scrollbar">
         <NuxtLink
           v-for="round in filteredRounds"
           :key="round.id"
