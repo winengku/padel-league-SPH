@@ -60,6 +60,8 @@ onMounted(async () => {
   } else {
     players.value = playerData || [];
   }
+
+  console.log(playerData)
 });
 
 const saveMatch = async (match: any) => {
