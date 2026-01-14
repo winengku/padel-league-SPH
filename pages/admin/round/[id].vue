@@ -88,10 +88,8 @@ const saveMatch = async (match: any) => {
   }
 };
 
-const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
-  return players.value.filter(
-    (p) => p.team_id === teamId && p.category_id === categoryId
-  );
+const getPlayersByTeamAndCategory = (teamId: number) => {
+  return players.value.filter((p) => p.team_id === teamId);
 };
 </script>
 
@@ -152,10 +150,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
             >
               <option value="">Select player 1</option>
               <option
-                v-for="p in getPlayersByTeamAndCategory(
-                  match.team_A,
-                  match.Category.id
-                )"
+                v-for="p in getPlayersByTeamAndCategory(match.team_A)"
                 :key="p.id"
                 :value="p.player_name"
               >
@@ -168,10 +163,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
             >
               <option value="">Select player 2</option>
               <option
-                v-for="p in getPlayersByTeamAndCategory(
-                  match.team_A,
-                  match.Category.id
-                )"
+                v-for="p in getPlayersByTeamAndCategory(match.team_A)"
                 :key="p.id"
                 :value="p.player_name"
               >
@@ -203,10 +195,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
             >
               <option value="">Select player 1</option>
               <option
-                v-for="p in getPlayersByTeamAndCategory(
-                  match.team_B,
-                  match.Category.id
-                )"
+                v-for="p in getPlayersByTeamAndCategory(match.team_B)"
                 :key="p.id"
                 :value="p.player_name"
               >
@@ -219,10 +208,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
             >
               <option value="">Select player 2</option>
               <option
-                v-for="p in getPlayersByTeamAndCategory(
-                  match.team_B,
-                  match.Category.id
-                )"
+                v-for="p in getPlayersByTeamAndCategory(match.team_B)"
                 :key="p.id"
                 :value="p.player_name"
               >
