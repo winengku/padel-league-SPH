@@ -39,7 +39,9 @@ onMounted(async () => {
       Category(
       category_name,
       id
-      )
+      ),
+      team_A,
+      team_B
     `
     )
     .eq("round_id", roundId)
@@ -60,8 +62,6 @@ onMounted(async () => {
   } else {
     players.value = playerData || [];
   }
-
-  console.log(playerData)
 });
 
 const saveMatch = async (match: any) => {
