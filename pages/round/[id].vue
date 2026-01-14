@@ -64,8 +64,6 @@ onMounted(async () => {
     .eq("round_id", roundId)
     .order("order");
 
-  console.log(data);
-
   if (error) {
     console.error(error);
     loading.value = false;
