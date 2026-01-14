@@ -42,7 +42,7 @@ onMounted(async () => {
       start_date,
       teamA:Team!round_team_a_fkey ( team_name ),
       teamB:Team!round_team_b_fkey ( team_name ),
-      court,
+      court
     `
     )
     .order("id");
