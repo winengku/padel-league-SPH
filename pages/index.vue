@@ -11,6 +11,7 @@ type RoundRow = {
   start_date: string;
   teamA: { team_name: string } | null;
   teamB: { team_name: string } | null;
+  court: number;
 };
 
 /**
@@ -40,7 +41,8 @@ onMounted(async () => {
       round_name,
       start_date,
       teamA:Team!round_team_a_fkey ( team_name ),
-      teamB:Team!round_team_b_fkey ( team_name )
+      teamB:Team!round_team_b_fkey ( team_name ),
+      court,
     `
     )
     .order("id");
@@ -202,7 +204,7 @@ const ladderByGroup = computed(() => {
           :to="`/round/${round.id}`"
           class="min-w-[200px] bg-green-800 text-white rounded-xl p-4 text-center min-h-40"
         >
-          <div class="text-sm opacity-80">{{ round.round_name }}</div>
+          <div class="text-sm opacity-80">Court {{ round.court }}</div>
           <div class="mt-3 text-sm font-semibold">
             {{ round.teamA.team_name }}
           </div>
