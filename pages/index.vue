@@ -240,7 +240,13 @@ const ladderByGroup = computed(() => {
           class="grid grid-cols-[28px_1fr_48px_48px] py-2 text-sm"
         >
           <div>{{ index + 1 }}</div>
-          <div class="truncate">{{ row.teamName }}</div>
+          <NuxtLink
+            :to="`/team/${row.teamId}`"
+            class="truncate text-green-700 font-medium"
+          >
+            {{ row.teamName }}
+          </NuxtLink>
+
           <div class="text-right">{{ row.diff }}</div>
           <div class="text-right font-semibold">{{ row.point }}</div>
         </div>
