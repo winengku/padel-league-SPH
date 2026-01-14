@@ -202,7 +202,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
               <option value="">Select player 1</option>
               <option
                 v-for="p in getPlayersByTeamAndCategory(
-                  match.team_A,
+                  match.team_B,
                   match.Category.id
                 )"
                 :key="p.id"
@@ -218,7 +218,7 @@ const getPlayersByTeamAndCategory = (teamId: number, categoryId: number) => {
               <option value="">Select player 2</option>
               <option
                 v-for="p in getPlayersByTeamAndCategory(
-                  match.team_A,
+                  match.team_B,
                   match.Category.id
                 )"
                 :key="p.id"
