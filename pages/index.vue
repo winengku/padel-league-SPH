@@ -172,8 +172,11 @@ const ladderByGroup = computed(() => {
 <template>
   <div class="space-y-6">
     <!-- HERO -->
-    <section class="h-44">
-      <img src="/hero-tournament.jpg" class="w-full h-full object-cover" />
+    <section class="h-55">
+      <img
+        src="/ISP-SPH-HouseLeague-981x552.jpg"
+        class="w-full h-full object-fit"
+      />
     </section>
 
     <!-- DATE TAB -->
