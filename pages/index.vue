@@ -234,7 +234,7 @@ const ladderByGroup = computed(() => {
           <div>#</div>
           <div>Team</div>
           <div class="text-right">Diff</div>
-          <div class="text-right">Pts</div>
+          <div class="text-right">Win</div>
         </div>
 
         <div
