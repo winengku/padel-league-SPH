@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from "vue";
 const supabase = useSupabase();
-const leagueId = 1; // contoh league baru
+const leagueId = 2; // contoh league baru
 
 /**
  * TYPE
@@ -18,7 +18,8 @@ type RoundRow = {
 /**
  * STATE (ROUND)
  */
-const rounds = ref<RoundRow[]>([]);
+const roundsDate = ref<RoundRow[]>([]);
+const roundsCourt = ref<RoundRow[]>([]);
 const activeDate = ref<string>("");
 const activeCourt = ref<number | null>(null);
 
@@ -50,14 +51,15 @@ onMounted(async () => {
     .eq("league_id", leagueId)
     .order("id");
 
-  rounds.value = roundData || [];
-  if (rounds.value.length > 0) {
-    activeDate.value = rounds.value[0].start_date;
+  roundsDate.value = roundData || [];
+  if (roundsDate.value.length > 0) {
+    activeDate.value = roundsDate.value[0].start_date;
   }
 
-  // if (rounds.value.length > 0) {
-  //   activeCourt.value = rounds.value[0].court;
-  // }
+  roundsCourt.value = roundData || [];
+  if (roundsCourt.value.length > 0) {
+    activeCourt.value = roundsCourt.value[0].court;
+  }
 
   /**
    * FETCH TEAMS
@@ -102,7 +104,7 @@ onMounted(async () => {
  * DATE TAB
  */
 const dateTabs = computed(() => {
-  return [...new Set(rounds.value.map((r) => r.start_date))];
+  return [...new Set(roundsDate.value.map((r) => r.start_date))];
 });
 
 watchEffect(() => {
@@ -112,30 +114,32 @@ watchEffect(() => {
 });
 
 // Court Tab
-// const courtTabs = computed(() => {
-//   return [...new Set(rounds.value.map((r) => r.court))].sort((a, b) => a - b);
-// });
+const courtTabs = computed(() => {
+  return [...new Set(roundsCourt.value.map((r) => r.court))].sort(
+    (a, b) => a - b,
+  );
+});
 
-// watchEffect(() => {
-//   if (activeCourt.value === null && courtTabs.value.length > 0) {
-//     activeCourt.value = courtTabs.value[0];
-//   }
-// });
+watchEffect(() => {
+  if (activeCourt.value === null && courtTabs.value.length > 0) {
+    roundsCourt.value = courtTabs.value[0];
+  }
+});
 
 /**
  * FILTER ROUND
  */
-const filteredRounds = computed(() => {
-  return rounds.value.filter(
+const filteredRoundsDate = computed(() => {
+  return roundsDate.value.filter(
     (r) => r.start_date === activeDate.value && r.teamA && r.teamB,
   );
 });
 
-// const filteredRounds = computed(() => {
-//   return rounds.value.filter(
-//     (r) => r.court === activeCourt.value && r.teamA && r.teamB,
-//   );
-// });
+const filteredRoundsCourt = computed(() => {
+  return roundsCourt.value.filter(
+    (r) => r.court === activeCourt.value && r.teamA && r.teamB,
+  );
+});
 
 /**
  * FORMAT DATE
@@ -205,13 +209,13 @@ const ladderByGroup = computed(() => {
     <!-- HERO -->
     <section class="h-55">
       <img
-        src="/ISP-SPH-HouseLeague-981x552.jpg"
+        src="/ISP-SPH-LiveStandinds_FirstServeVol2-981x552.png"
         class="w-full h-full object-fit"
       />
     </section>
 
     <!-- DATE TAB -->
-    <section class="px-4">
+    <!-- <section class="px-4">
       <div class="flex gap-3 overflow-x-auto hide-scrollbar">
         <button
           v-for="date in dateTabs"
@@ -227,10 +231,10 @@ const ladderByGroup = computed(() => {
           {{ formatDate(date) }}
         </button>
       </div>
-    </section>
+    </section> -->
 
     <!-- COURT TAB -->
-    <!-- <section class="px-4">
+    <section class="px-4">
       <div class="flex gap-3 overflow-x-auto hide-scrollbar">
         <button
           v-for="court in courtTabs"
@@ -246,13 +250,19 @@ const ladderByGroup = computed(() => {
           Court {{ court }}
         </button>
       </div>
-    </section> -->
+    </section>
 
     <!-- ROUND CARD -->
     <section class="px-4">
       <div class="flex gap-4 overflow-x-auto hide-scrollbar">
+        <!-- <NuxtLink
+          v-for="round in filteredRoundsDate"
+          :key="round.id"
+          :to="`/round/${round.id}`"
+          class="min-w-[200px] bg-green-800 text-white rounded-xl p-4 text-center min-h-40"
+        > -->
         <NuxtLink
-          v-for="round in filteredRounds"
+          v-for="round in filteredRoundsCourt"
           :key="round.id"
           :to="`/round/${round.id}`"
           class="min-w-[200px] bg-green-800 text-white rounded-xl p-4 text-center min-h-40"
