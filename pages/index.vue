@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from "vue";
 const supabase = useSupabase();
+const leagueId = 1; // contoh league baru
 
 /**
  * TYPE
@@ -19,6 +20,7 @@ type RoundRow = {
  */
 const rounds = ref<RoundRow[]>([]);
 const activeDate = ref<string>("");
+const activeCourt = ref<number | null>(null);
 
 /**
  * STATE (LADDERBOARD)
@@ -43,8 +45,9 @@ onMounted(async () => {
       teamA:Team!round_team_a_fkey ( team_name ),
       teamB:Team!round_team_b_fkey ( team_name ),
       court
-    `
+    `,
     )
+    .eq("league_id", leagueId)
     .order("id");
 
   rounds.value = roundData || [];
@@ -52,16 +55,26 @@ onMounted(async () => {
     activeDate.value = rounds.value[0].start_date;
   }
 
+  // if (rounds.value.length > 0) {
+  //   activeCourt.value = rounds.value[0].court;
+  // }
+
   /**
    * FETCH TEAMS
    */
-  const { data: teamData } = await supabase.from("Team").select(`
+
+  const { data: teamData } = await supabase
+    .from("Team")
+    .select(
+      `
       id,
       team_name,
       group:Group!Team_group_id_fkey (
-      group_name
+        group_name
+      )
+    `,
     )
-    `);
+    .eq("league_id", leagueId);
 
   teams.value = teamData || [];
 
@@ -76,8 +89,9 @@ onMounted(async () => {
       team_B,
       score_A,
       score_B
-    `
+    `,
     )
+    .eq("league_id", leagueId)
     .not("score_A", "is", null)
     .not("score_B", "is", null);
 
@@ -97,14 +111,31 @@ watchEffect(() => {
   }
 });
 
+// Court Tab
+// const courtTabs = computed(() => {
+//   return [...new Set(rounds.value.map((r) => r.court))].sort((a, b) => a - b);
+// });
+
+// watchEffect(() => {
+//   if (activeCourt.value === null && courtTabs.value.length > 0) {
+//     activeCourt.value = courtTabs.value[0];
+//   }
+// });
+
 /**
  * FILTER ROUND
  */
 const filteredRounds = computed(() => {
   return rounds.value.filter(
-    (r) => r.start_date === activeDate.value && r.teamA && r.teamB
+    (r) => r.start_date === activeDate.value && r.teamA && r.teamB,
   );
 });
+
+// const filteredRounds = computed(() => {
+//   return rounds.value.filter(
+//     (r) => r.court === activeCourt.value && r.teamA && r.teamB,
+//   );
+// });
 
 /**
  * FORMAT DATE
@@ -197,6 +228,25 @@ const ladderByGroup = computed(() => {
         </button>
       </div>
     </section>
+
+    <!-- COURT TAB -->
+    <!-- <section class="px-4">
+      <div class="flex gap-3 overflow-x-auto hide-scrollbar">
+        <button
+          v-for="court in courtTabs"
+          :key="court"
+          @click="activeCourt = court"
+          class="px-4 py-2 rounded-full border font-medium whitespace-nowrap"
+          :class="
+            activeCourt === court
+              ? 'border-orange-500 text-orange-500'
+              : 'border-gray-300 text-gray-600'
+          "
+        >
+          Court {{ court }}
+        </button>
+      </div>
+    </section> -->
 
     <!-- ROUND CARD -->
     <section class="px-4">
